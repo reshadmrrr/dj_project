@@ -22,7 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_APP_SECRET_KEY")
+SECRET_KEY = (
+    "django-insecure-*7p6*w^6_2j!x#&&p91&z@y2_r4%d6_)4df8ndxcwynkiki1%*"
+    or os.environ.get("DJANGO_APP_SECRET_KEY")
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", 1)))
@@ -61,7 +64,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"}
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "pagination.PageNumberPagination",
+}
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Title",
@@ -97,10 +103,10 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("POSTGRES_DB"),
-        "USER": os.environ.get("POSTGRES_USER"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-        "HOST": "db",
+        "NAME": "postgres" or os.environ.get("POSTGRES_DB"),
+        "USER": "postgres" or os.environ.get("POSTGRES_USER"),
+        "PASSWORD": "postgres" or os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": "127.0.0.1",
         "PORT": 5432,
     }
 }

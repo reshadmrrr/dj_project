@@ -10,6 +10,8 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - dj_project
 
   db:
     image: postgres:16.1
@@ -20,22 +22,30 @@ services:
       - .debug.env
     volumes:
       - db_dev_volume:/var/lib/postgresql/data/
+    networks:
+      - dj_project
 
-  app:
-    restart: always
-    build:
-      context: .
-    env_file:
-      - .debug.env
-    ports:
-      - 8000:8000
-    depends_on:
-      - db
-      - rabbit
-    links:
-      - rabbit
-    volumes:
-      - .:/app
+  # app:
+    # restart: always
+    # build:
+    #   context: .
+    # env_file:
+    #   - .debug.env
+    # ports:
+    #   - 8000:8000
+    # depends_on:
+    #   - db
+    #   - rabbit
+    # links:
+    #   - rabbit
+    # volumes:
+    #   - .:/app
+    # networks:
+    #   - dj_project
 
 volumes:
   db_dev_volume:
+
+networks:
+  dj_project:
+    driver: bridge
