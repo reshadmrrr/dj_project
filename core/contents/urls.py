@@ -1,10 +1,9 @@
 from django.urls import path
+from .views import get_contents
 
 
-from .views import *
-
-app_name = "core"
+app_name = "contents"
 
 urlpatterns = [
-    path("/", get_authors),
+    path("/", get_contents),
 ]

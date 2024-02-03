@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from views import get_authors
+from .views import get_authors
 
 app_name = "authors"
 

@@ -1,5 +1,5 @@
 import uuid
-from core.authors.models import AuthorInfo
+from authors.models import AuthorInfo
 from core.models import BaseModel
 from django.db import models
 
