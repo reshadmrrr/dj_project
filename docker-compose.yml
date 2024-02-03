@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+
+  rabbit:
+    image: rabbitmq:3.11.28-management
+    restart: always
+    env_file:
+      - .debug.env
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  db:
+    image: postgres:16.1
+    ports:
+      - 5432:5432
+    restart: always
+    env_file:
+      - .debug.env
+    volumes:
+      - db_dev_volume:/var/lib/postgresql/data/
+
+  app:
+    restart: always
+    build:
+      context: .
+    env_file:
+      - .debug.env
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - rabbit
+    links:
+      - rabbit
+    volumes:
+      - .:/app
+
+volumes:
+  db_dev_volume:
