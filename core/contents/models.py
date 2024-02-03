@@ -59,7 +59,7 @@ class Media(BaseModel):
 class URL(BaseModel):
     url = models.URLField(max_length=4096, blank=True, null=True)
     media = models.ForeignKey(
-        AuthorInfo,
+        Content,
         on_delete=models.CASCADE,
         related_name="media_urls",
         blank=True,
